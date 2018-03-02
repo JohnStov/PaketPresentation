@@ -1,258 +1,92 @@
-- title : React Native with F#
-- description : Introduction to React Native with F#
-- author : Steffen Forkmann
-- theme : night
+- title : Paket
+- description : What is Paket & why should you use it?
+- author : John Stovin
+- theme : simple
 - transition : default
 
 ***
 
-## React Native with F#
-
-<br />
-<br />
-
-### Modern mobile app development
-
-<br />
-<br />
-Steffen Forkmann - [@sforkmann](http://www.twitter.com/sforkmann)
+# Paket
+## John Stovin
+### Twitter : @johnstovin
 
 ***
 
-### Modern mobile app development?
+## What is Paket?
 
-* UI/UX
-    * "Native mobile apps"
-    * Performance
-* Tooling
-    * Hot loading
-    * IntelliSense
-* Maintainability
-    * Easy to debug
-    * Correctness
+Paket is a better package manager for .Net
 
----
+It fixes several of the annoyances of NuGet
 
-### "Native" UI
+It plays nice with nuget.org
 
- <img src="images/meter.png" style="background: transparent; border-style: none;"  width=300 />
-
----
-
-### Tooling
-
-<img src="images/hotloading.gif" style="background: transparent; border-style: none;"  />
-
-*** 
-
-### Model - View - Update
-
-#### "Elm - Architecture"
-
- <img src="images/Elm.png" style="background: white;" width=700 />
-
-
- <small>http://danielbachler.de/2016/02/11/berlinjs-talk-about-elm.html</small>
-
-
---- 
-
-### Model - View - Update
-
-    // MODEL
-
-    type Model = int
-
-    type Msg =
-    | Increment
-    | Decrement
-
-    let init() : Model = 0
-
----
-
-### Model - View - Update
-
-    // VIEW
-
-    let view model dispatch =
-        div []
-            [ button [ OnClick (fun _ -> dispatch Decrement) ] [ str "-" ]
-              div [] [ str (model.ToString()) ]
-              button [ OnClick (fun _ -> dispatch Increment) ] [ str "+" ] ]
-
----
-
-### Model - View - Update
-
-    // UPDATE
-
-    let update (msg:Msg) (model:Model) =
-        match msg with
-        | Increment -> model + 1
-        | Decrement -> model - 1
-
----
-
-### Model - View - Update
-
-    // wiring things up
-
-    Program.mkSimple init update view
-    |> Program.withConsoleTrace
-    |> Program.withReact "elmish-app"
-    |> Program.run
-
----
-
-### Model - View - Update
-
-# Demo
+It can manage other resources as well
 
 ***
 
-### Sub-Components
+## Where has it come from?
 
-    // MODEL
+Paket was developed by members of the FSharp community
 
-    type Model = {
-        Counters : Counter.Model list
-    }
+They were frustrated with the shortcomings of NuGet
 
-    type Msg = 
-    | Insert
-    | Remove
-    | Modify of int * Counter.Msg
+They tried to submit patches to NuGet, but the NuGet team refused them
 
-    let init() : Model =
-        { Counters = [] }
-
----
-
-### Sub-Components
-
-    // VIEW
-
-    let view model dispatch =
-        let counterDispatch i msg = dispatch (Modify (i, msg))
-
-        let counters =
-            model.Counters
-            |> List.mapi (fun i c -> Counter.view c (counterDispatch i)) 
-        
-        div [] [ 
-            yield button [ OnClick (fun _ -> dispatch Remove) ] [  str "Remove" ]
-            yield button [ OnClick (fun _ -> dispatch Insert) ] [ str "Add" ] 
-            yield! counters ]
-
----
-
-### Sub-Components
-
-    // UPDATE
-
-    let update (msg:Msg) (model:Model) =
-        match msg with
-        | Insert ->
-            { Counters = Counter.init() :: model.Counters }
-        | Remove ->
-            { Counters = 
-                match model.Counters with
-                | [] -> []
-                | x :: rest -> rest }
-        | Modify (id, counterMsg) ->
-            { Counters =
-                model.Counters
-                |> List.mapi (fun i counterModel -> 
-                    if i = id then
-                        Counter.update counterMsg counterModel
-                    else
-                        counterModel) }
-
----
-
-### Sub-Components
-
-# Demo
+So they wrote their own dependency manager
 
 ***
 
-### React
-
-* Facebook library for UI 
-* <code>state => view</code>
-* Virtual DOM
+## What problems does it solve?
 
 ---
 
-### Virtual DOM - Initial
+__Paket prevents you from having different versions of the same dependent assembly in different projects of the same solution__
 
-<br />
-<br />
-
-
- <img src="images/onchange_vdom_initial.svg" style="background: white;" />
-
-<br />
-<br />
-
- <small>http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html</small>
+Paket stores all the depencies for a solution in one place. All projects within the solution have to reference the same version of the dependency.
 
 ---
 
-### Virtual DOM - Change
+__Paket gives you reliable paths to dependencies__
 
-<br />
-<br />
-
-
- <img src="images/onchange_vdom_change.svg" style="background: white;" />
-
-<br />
-<br />
-
- <small>http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html</small>
+Paket does not put the version number in the path to the dependency. This means that command line tools get a reliable path to dependencies that will not change when you update the dependency.
 
 ---
 
-### Virtual DOM - Reuse
+__Paket hides transitive dependencies__
 
-<br />
-<br />
+You only need to care about your direct dependencies. If your dependencies have dependencies of their own, Paket handles it gracefully without forcing you to care about them.
 
+---
 
- <img src="images/onchange_immutable.svg" style="background: white;" />
+__Paket lets you take dependencies on more than just NuGet packages__
 
-<br />
-<br />
+With paket you can take _versioned_ dependencies on:
 
- <small>http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html</small>
+- Git repositories
+- GitHub respositories & Gists
 
-
-*** 
-
-### ReactNative
-
- <img src="images/ReactNative.png" style="background: white;" />
-
-
- <small>http://timbuckley.github.io/react-native-presentation</small>
+and unversioned dependencies on any url
 
 ***
 
-### Show me the code
+## How does Paket work?
 
-*** 
+***
 
-### TakeAways
+## Who uses Paket?
 
-* Learn all the FP you can!
-* Simple modular design
+Paket is the depencie manager of choice in the FSharp community
 
-*** 
 
-### Thank you!
 
-* https://github.com/fable-compiler/fable-elmish
-* https://ionide.io
-* https://facebook.github.io/react-native/
+***
+
+## Can I rely on Paket?
+
+Paket is in _very_ active development. 
+
+
+
+***
+
+## You've convinced me. Where can I get Paket?
