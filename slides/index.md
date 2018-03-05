@@ -1,34 +1,35 @@
 - title : Paket
 - description : What is Paket & why should you use it?
 - author : John Stovin
-- theme : simple
-- transition : default
+- theme : moon
+- transition : convex
 
 ***
 
 # Paket
-## John Stovin
-### Twitter : @johnstovin
+
+## .NET Package Management Done Right
+
+### John Stovin
+#### Twitter : @johnstovin
 
 ***
 
 ## What is Paket?
 
-Paket is a better package manager for .Net
+A better package manager for .Net
 
-It fixes several of the annoyances of NuGet
+Fixes several NuGet annoyances
 
-It plays nice with nuget.org
+Plays nice with nuget.org
 
-It can manage other resources as well
+Manages other resources besides NuGet packages
 
 ***
 
 ## Where has it come from?
 
-Paket was developed by members of the FSharp community
-
-They were frustrated with the shortcomings of NuGet
+Developed by members of the FSharp community who were frustrated with the shortcomings of NuGet
 
 They tried to submit patches to NuGet, but the NuGet team refused them
 
@@ -36,17 +37,34 @@ So they wrote their own dependency manager
 
 ***
 
-## What problems does it solve?
+## Who uses Paket?
+
+Paket is the dependency manager of choice in the FSharp community
+
+Most F# open source projects use Paket
+
+Paket deserves more exposure within the wider .NET community
+
+***
+
+## Why is Paket better than Nuget?
 
 ---
 
-__Paket prevents you from having different versions of the same dependent assembly in different projects of the same solution__
+__Paket prevents you having different versions of the same dependent assembly in different projects of the same solution__
 
 Paket stores all the depencies for a solution in one place. All projects within the solution have to reference the same version of the dependency.
 
 ---
 
+__Paket guarantees stable versions of all dependencies__
+
+Paket works out the best combination of versions of all dependencies based on _your_ constraints. These are stored in the paket.lock file, which only changes when _you_ decide. This guarantees repeatable builds.
+
+---
+
 __Paket gives you reliable paths to dependencies__
+
 
 Paket does not put the version number in the path to the dependency. This means that command line tools get a reliable path to dependencies that will not change when you update the dependency.
 
@@ -63,30 +81,47 @@ __Paket lets you take dependencies on more than just NuGet packages__
 With paket you can take _versioned_ dependencies on:
 
 - Git repositories
-- GitHub respositories & Gists
+- GitHub respositories
+- Gists
 
-and unversioned dependencies on any url
-
-***
-
-## How does Paket work?
+as well as an unversioned dependency on any url
 
 ***
 
-## Who uses Paket?
+## What tooling support is there for Paket?
 
-Paket is the depencie manager of choice in the FSharp community
+Visual Studio plugin
 
+Visual Studio Code plugin (Ionide)
 
+Automatic conversion from NuGet
+
+Integrates with MS Build, .Net Core cmdline
+
+Also support for Atom, Emacs, Xamarin Studio, JetBrains Rider
 
 ***
 
 ## Can I rely on Paket?
 
-Paket is in _very_ active development. 
+Paket is in _very_ active development
 
+Patches released every few days
 
+Patch for GitHub TLS deprecation available within hours
+
+Paket always tries to update itself
+
+Updates always available on chocolatey.org
 
 ***
 
 ## You've convinced me. Where can I get Paket?
+
+Go to https://fsprojects.github.io/Paket/ and follow the links
+
+***
+
+## Thank you
+
+And thanks to FsReveal (https://fsprojects.github.io/FsReveal/)
