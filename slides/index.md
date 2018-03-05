@@ -29,7 +29,7 @@ Manages other resources besides NuGet packages
 
 ## Where has it come from?
 
-Developed by members of the FSharp community who were frustrated with the shortcomings of NuGet
+Developed by members of the FSharp community frustrated with the shortcomings of NuGet
 
 They tried to submit patches to NuGet, but the NuGet team refused them
 
@@ -118,10 +118,20 @@ Updates always available on chocolatey.org
 
 ## You've convinced me. Where can I get Paket?
 
-Go to https://fsprojects.github.io/Paket/ and follow the links
+Go to <https://fsprojects.github.io/Paket/> and follow the links
 
 ***
 
 ## Thank you
 
-And thanks to FsReveal (https://fsprojects.github.io/FsReveal/)
+Slides available at:
+
+https://johnstov.github.io/PaketPresentation
+
+Slide source at:
+
+https://github.com/JohnStov/PaketPresentation
+
+Slides produced with FsReveal:
+
+https://fsprojects.github.io/FsReveal
