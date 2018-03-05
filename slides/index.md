@@ -47,7 +47,7 @@ Paket deserves more exposure within the wider .NET community
 
 ***
 
-## Why is Paket better than Nuget?
+## Why is Paket better than NuGet?
 
 ---
 
